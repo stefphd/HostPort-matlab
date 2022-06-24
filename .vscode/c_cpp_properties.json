@@ -1,0 +1,13 @@
+{
+    "configurations": [
+        {
+            "name": "SBBMicro",
+            "includePath": [
+                "${workspaceFolder}/include",
+                "${workspaceFolder}/src",
+                "${MATLAB}/extern/include/*"
+            ]
+        }
+    ],
+    "version": 4
+}
