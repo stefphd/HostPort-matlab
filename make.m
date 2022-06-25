@@ -8,7 +8,7 @@ function make()
     if ispc
         cflags = ['COMPFLAGS=''$COMPFLAGS /' 'std:c++17' ''''];
      elseif isunix
-        cflags = ['CFLAGS=''$CFLAGS -' 'std=c++17' ''''];
+        cflags = ['CXXFLAGS=''$CXXFLAGS -' 'std=c++17' ''''];
     else
         error('Unsuppoted OS');
     end
