@@ -32,7 +32,7 @@
 #include <vector>
 
 /*! \brief A class for serial communication.
-    \details Class for managing a general-purpose serial communication in Windows (using COM port) and Linux (using ttyACM). 
+    \details Class for managing a general-purpose serial communication in Windows (using COM port) and Linux (using /dev/ttyACM). 
     This is just a C++ wrapper for the HANDLE type in Windows, and the open, write, read, etc functions in Linux.
     \author Stefano Lovato
     \date 2022
@@ -48,8 +48,10 @@ class Serial {
         struct termios _serialParams; //!< serial param struct
         #endif
         bool _isInit = false; //!< true if serial has been initialized
-        unsigned int _timeout = 10; //!< timeout of the serial port
+        unsigned int _timeout = TIMEOUT; //!< timeout of the serial port
     public:
+        static constexpr unsigned int TIMEOUT = 10; //!< Default timeout.
+
         /*! \brief Constructor.
             \details Default constructor for the serial class. No parameter is necessary.
         */
@@ -129,6 +131,12 @@ class Serial {
             \param timeout The timeout to use (in ms).
         */
         void setTimeout(unsigned int timeout);
+
+        /*! \brief Get the timeout.
+            \details Function to get the timeout the serial communication.
+            \return The timeout to use (in ms).
+        */
+        unsigned int getTimeout();
 
         /*! \brief Check if serial is open.
             \details Boolean operator to check if the serial communication has been open successfully.

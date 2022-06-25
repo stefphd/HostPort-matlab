@@ -9,15 +9,16 @@ This is the (MATLAB) host-side implementation of the Host Port class. The class 
 * `./src`: C/C++ source files
 * `./include`: C/C++ include files
 * `./vscode`: setting folder for Visual Studio Code
-* `HostPortMex.mexw64`: mex file (Windows x64 version)
+* `HostPortMex.mexw64`: mex file for the Host Port class (Windows x64 version)
 * `make.m`: MATLAB function to build the mex file
 * `HostPort.m`: implementation of the Host Port class in MATLAB (using the mex file)
+* `Serial.m`: implementation of the Serial class in MATLAB (using the mex file)
 * `testing.m`: MATLAB script for testing
 * `README.md`: this file
 
 ## Quick start
 
-Class usage is:
+Usage for the Host Port class is:
 
 ```matlab
 port = 3; %serial port
@@ -82,7 +83,7 @@ The class has two static method (i.e. object instantiation not required):
 
 ## Building
 
-If you want to (re)build the mex file, you need to run in MATLAB
+If you want to (re)build the mex file for the Host Port class, you need to run in MATLAB
 
 ```matlab
 make

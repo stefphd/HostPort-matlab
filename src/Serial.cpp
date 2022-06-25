@@ -188,3 +188,7 @@ size_t Serial::read(unsigned char* buf, size_t len) {
 void Serial::setTimeout(unsigned int timeout) {
     _timeout = timeout;
 }
+
+unsigned int Serial::getTimeout() {
+    return _timeout;
+}

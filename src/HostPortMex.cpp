@@ -5,6 +5,7 @@
 //include std
 #include <map>
 #include <string>
+#include <memory> 
 
 //include HostPort class
 #include "HostPort.h"
@@ -36,7 +37,6 @@ enum class Action {
     GetTerminator,
     IsInit,
     GetHandles,
-    DeleteHandles,
     GetAvailablePort,
 };
 
@@ -74,18 +74,23 @@ int mexAtExit(void (*ExitFcn)(void)) {
 
 //main
 void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[]) {
+    
+    Action action;
 
-    if (nrhs < 1 || !mxIsChar(prhs[0])) //check input
+    if (nrhs > 0 && !mxIsChar(prhs[0])) //check input
         mexErrMsgTxt("First input must be an action string ('new', 'delete', or a method name).");
     
-    char *actionCstr = mxArrayToString(prhs[0]);
-    std::string actionStr(actionCstr);
-    mxFree(actionCstr);
-    
-    if (actionTypeMap.count(actionStr) == 0)
-        mexErrMsgTxt(("Unrecognized action (not in actionTypeMap): " + actionStr).c_str());
-    
-    Action action = actionTypeMap.at(actionStr);
+    if (nrhs > 0) { 
+        char *actionCstr = mxArrayToString(prhs[0]);
+        std::string actionStr(actionCstr);
+        mxFree(actionCstr);
+        
+        if (actionTypeMap.count(actionStr) == 0)
+            mexErrMsgTxt(("Unrecognized action (not in actionTypeMap): " + actionStr).c_str());
+        
+        action = actionTypeMap.at(actionStr);
+    } else //default 'new'
+        action = Action::New;
     
     //single-argument methods
     switch (action) {
@@ -274,6 +279,3 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[]) {
         }
     }
 }
-
-
-
