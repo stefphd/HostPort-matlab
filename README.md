@@ -4,12 +4,15 @@ MATLAB class for communication from e to the microcontroller.
 
 This is the (MATLAB) host-side implementation of the Host Port class. The class makes use of a mex file (generated from C/C++ code) to speed up the communication. The class is thus just a wrapper around a C++ class.
 
+Tested on Windows 10 and Linux (ArchLinux) with MATLAB 2022a.
+
 ## Contents
 
 * `./src`: C/C++ source files
 * `./include`: C/C++ include files
 * `./vscode`: setting folder for Visual Studio Code
 * `HostPortMex.mexw64`: mex file for the Host Port class (Windows x64 version)
+* `HostPortMex.mexa64`: mex file for the Host Port class (Linux x64 version)
 * `make.m`: MATLAB function to build the mex file
 * `HostPort.m`: implementation of the Host Port class in MATLAB (using the mex file)
 * `Serial.m`: implementation of the Serial class in MATLAB (using the mex file)
