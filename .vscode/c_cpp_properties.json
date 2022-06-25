@@ -5,7 +5,8 @@
             "includePath": [
                 "${workspaceFolder}/include",
                 "${workspaceFolder}/src",
-                "${MATLAB}/extern/include/*"
+                "${MATLAB}/extern/include/*",
+                "/usr/local/MATLAB/R2022a/extern/include"
             ]
         }
     ],
