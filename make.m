@@ -4,12 +4,11 @@ function make()
     include = './include';
     src = 'src/HostPortMex.cpp src/Serial.cpp src/HostPort.cpp';
     flags = '';
-    cflags = 'std:c++17';
 
     if ispc
-        cflags = ['COMPFLAGS=''$COMPFLAGS /' cflags ''''];
+        cflags = ['COMPFLAGS=''$COMPFLAGS /' 'std:c++17' ''''];
      elseif isunix
-        cflags = ['CFLAGS=''$CFLAGS -' cflags ''''];
+        cflags = ['CFLAGS=''$CFLAGS -' 'std=c++17' ''''];
     else
         error('Unsuppoted OS');
     end
