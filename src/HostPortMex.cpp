@@ -116,8 +116,10 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[]) {
 
         case Action::Delete: {
             if (nrhs == 1) { //delete all if no ptr given
-                for (const auto& [k, v] : handleMap) 
-                    handleMap.erase(k), mexUnlock();
+                uint32_t size = handleMap.size();
+                handleMap.clear();
+                for (int i = 0; i < size; ++i)
+                    mexUnlock();
                 return;
             }
             break;
