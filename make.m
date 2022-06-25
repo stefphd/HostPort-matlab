@@ -1,24 +1,10 @@
-function make(cmd)
-    if nargin < 1
-        cmd = 'hostport';
-    end
+function make()
 
-    switch cmd
-        case 'hostport'
-            target = 'HostPortMex';
-            include = './include';
-            src = 'src/HostPortMex.cpp src/Serial.cpp src/HostPort.cpp';
-            flags = '';
-            cflags = 'std:c++17';
-        case 'serial'
-            target = 'SerialMex';
-            include = './include';
-            src = 'src/SerialMex.cpp src/Serial.cpp';
-            flags = '';
-            cflags = 'std:c++17';
-        otherwise
-            error('invalid command');
-    end
+    target = 'HostPortMex';
+    include = './include';
+    src = 'src/HostPortMex.cpp src/Serial.cpp src/HostPort.cpp';
+    flags = '';
+    cflags = 'std:c++17';
 
     if ispc
         cflags = ['COMPFLAGS=''$COMPFLAGS /' cflags ''''];
