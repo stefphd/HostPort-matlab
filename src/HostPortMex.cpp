@@ -5,6 +5,7 @@
 //include std
 #include <map>
 #include <string>
+#include <cstring>
 #include <memory> 
 
 //include HostPort class
