@@ -1,8 +1,8 @@
 # HostPort Class
 
-MATLAB class for communication from e to the microcontroller. 
+MATLAB binding of the HostPort class for communication from e to the microcontroller.
 
-This is the (MATLAB) host-side implementation of the Host Port class. The class makes use of a mex file (generated from C/C++ code) to speed up the communication. The class is thus just a wrapper around a C++ class.
+This is the (MATLAB) host-side implementation of the Host Port class. The class is internally implemented in C++ and interfaced to MATLAB using a mex file (generated from C/C++ code). The MATLAB class is thus just a wrapper around a C++ class.
 
 Tested on Windows 10 and Linux (ArchLinux) with MATLAB 2022a.
 
@@ -97,3 +97,7 @@ Note that building works only in Windows and Linux. MacOS is not supported at th
 ## Known issues
 
 * `clear all` makes MATLAB crash. Just use `clear` and `clear mex` instead.
+
+## TODO list
+
+* Implement `decode` in the mex file, e.g. copying the buffer in the C++ class and converting to the specified data types: do this in the mex file or in the C++ class
