@@ -10,7 +10,7 @@ Tested on Windows 10 and Linux (ArchLinux) with MATLAB 2022a.
 
 * `./src`: C/C++ source files
 * `./include`: C/C++ include files
-* `./vscode`: setting folder for Visual Studio Code
+* `./.vscode`: setting folder for Visual Studio Code
 * `HostPortMex.mexw64`: mex file for the Host Port class (Windows x64 version)
 * `HostPortMex.mexa64`: mex file for the Host Port class (Linux x64 version)
 * `make.m`: MATLAB function to build the mex file
