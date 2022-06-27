@@ -4,6 +4,7 @@
 
 #include "Serial.h"
 #include <memory> 
+#include <string>
 
 /*! \brief A class for host communication via serial port.
     \details Class for host communication via serial port with a specified communication protocol.
@@ -154,17 +155,17 @@ public:
     static constexpr unsigned int TIMEOUT = 100; //!< Default timeout.
 
 private:
+    //static constexpr unsigned int TX_BUF_SIZE = 1024; //!< Size of the output buffer.
+    static constexpr unsigned int MASK = 0xFF; //!< Mask for parsing.
     Serial serial; //!< Serial object.
     unsigned int _port; //!< Serial port.
     unsigned int _baud; //!< Baudrate.
     unsigned int _terminator; //!< Terminator bytes.
     unsigned int _header; //!< Header bytes.
     unsigned int _timeout; //!< Timeout.
-    unsigned char _tx_buf[1024]; //!< Tx buffer.
+    //unsigned char _tx_buf[TX_BUF_SIZE]; //!< Tx buffer.
     bool _isFirstRead = false; //!< True if firt packer read.
     bool init(unsigned int port, unsigned int baud, unsigned int timeout); //!< Private initialization function
-    static constexpr unsigned int MASK = 0xFF; //!< Mask for parsing.
-    static constexpr unsigned int TX_BUF_SIZE = 1024; //!< Size of the output buffer.
 };
 
 #endif

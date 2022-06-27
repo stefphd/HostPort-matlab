@@ -113,11 +113,13 @@ bool HostPort::write(unsigned char* packetPtr, unsigned int size) {
         return false;
     }
     
-    if (size > TX_BUF_SIZE) {
+    /*if (size > TX_BUF_SIZE) {
         return false;
-    }
+    }*/
 
     size_t c = 0; //counter for sent size
+
+    unsigned char* _tx_buf = (unsigned char*) malloc(size+8); //transmit buffer
 
     //put header
     _tx_buf[c++] = _header & MASK;
@@ -127,7 +129,7 @@ bool HostPort::write(unsigned char* packetPtr, unsigned int size) {
 
     //add data
     for (int i = 0; i < size; ++i) _tx_buf[c++] = *(packetPtr + i);
-
+    
     //put terminator
     _tx_buf[c++] = _terminator & MASK;
     _tx_buf[c++] = (_terminator >> 8) & MASK;
@@ -136,6 +138,9 @@ bool HostPort::write(unsigned char* packetPtr, unsigned int size) {
 
     //put start bytes in buf
     serial.write(_tx_buf, c);
+
+    //free
+    free(_tx_buf);
 
     return true;
 
