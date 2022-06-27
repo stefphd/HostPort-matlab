@@ -13,7 +13,7 @@ hostport.begin(port, baud); %start the communication, return true if success
 exit = hostport.write(data); %write buffer
 
 %check initialization
-if ~hostport %or hostport.IsInit or hostport.begin(port, baud)
+if ~hostport %or hostport.isInit or hostport.begin(port, baud)
     disp('Unable to connect')
 end
 

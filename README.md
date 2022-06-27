@@ -26,7 +26,7 @@ Usage for the Host Port class is:
 ```matlab
 port = 3; %serial port
 baud = 115200; %baudrate
-len = 256; %size of the buffer to read
+len = 64; %size of the buffer to read
 buf = single([0 1 2 3 4 5]); %buffer to write
 
 hostport = HostPort(); %instantiate a new HostPort object
@@ -44,7 +44,7 @@ To check the connection status:
 
 ```matlab
 %check initialization
-if ~hostport %or hostport.IsInit or hostport.begin(port, baud)
+if ~hostport %or hostport.isInit or hostport.begin(port, baud)
     error('Unable to connect')
 end
 
