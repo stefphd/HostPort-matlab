@@ -1,4 +1,4 @@
-# HostPort Class
+# HostPort-matlab
 
 MATLAB binding of the HostPort class for communication from and to the microcontroller.
 
