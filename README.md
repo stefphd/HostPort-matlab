@@ -33,8 +33,9 @@ hostport = HostPort(); %instantiate a new HostPort object
 hostport.begin(port, baud); %start the communication, return true if success
 %hostport.begin(port, baud, header, terminator); %set also header and terminator
 
-exit = hostport.read(len); %read 'len' bytes, return true if success
-data = hostport.decode('single'); %decode data into single (i.e. float)
+%possibilities are: 'single', 'double', 'uint8', 'int8', 'uint16', 'int16', 
+%                   'uint32', 'int32', 'uint64', 'int64'
+exit = hostport.read(len,'single'); %read 'len' single values, return true if success
 
 exit = hostport.write(buf); %write buffer
 ```
@@ -93,11 +94,3 @@ make
 ```
 
 Note that building works only in Windows and Linux. MacOS is not supported at the moment. A valid C++17 compiler is required.
-
-## Known issues
-
-* `clear all` makes MATLAB crash. Just use `clear` and `clear mex` instead.
-
-## TODO list
-
-* Implement `decode` in the mex file, e.g. copying the buffer in the C++ class and converting to the specified data types: do this in the mex file or in the C++ class
