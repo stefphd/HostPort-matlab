@@ -112,6 +112,10 @@ bool HostPort::write(unsigned char* packetPtr, unsigned int size) {
     if (!serial) {
         return false;
     }
+    
+    if (size > TX_BUF_SIZE) {
+        return false;
+    }
 
     size_t c = 0; //counter for sent size
 

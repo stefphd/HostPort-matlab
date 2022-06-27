@@ -164,6 +164,7 @@ private:
     bool _isFirstRead = false; //!< True if firt packer read.
     bool init(unsigned int port, unsigned int baud, unsigned int timeout); //!< Private initialization function
     static constexpr unsigned int MASK = 0xFF; //!< Mask for parsing.
+    static constexpr unsigned int TX_BUF_SIZE = 1024; //!< Size of the output buffer.
 };
 
 #endif

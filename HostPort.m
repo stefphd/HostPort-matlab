@@ -13,10 +13,6 @@ classdef HostPort < handle
         IsInit 
     end
     
-    properties (SetAccess = private)
-        Data 
-    end
-    
     methods (Static)
         
         function clear()
@@ -71,21 +67,17 @@ classdef HostPort < handle
         end
         
         %read and write
-        function exit = read(obj, len)
-           [obj.Data, exit] = HostPortMex('read',obj.ptr_,len); 
-        end
-        
-        function exit = write(obj, buf)
-            buf = typecast(buf, 'uint8');
-            exit = HostPortMex('write',obj.ptr_,buf);            
-        end
-        
-        function data = decode(obj, type)
+        function [data, exit] = read(obj, len, type)
             arguments
                 obj
-                type char {mustBeMember(type,{'uint8','uint16','uint32','single','double'})} = 'uint8'
+                len {mustBeInteger, mustBeNonnegative, mustBeLessThan(len,4294967296)}
+                type char {mustBeMember(type,{'uint8','uint16','uint32','uint64','int8','int16','int64','single','double'})} = 'uint8'
             end
-            data = typecast(obj.Data, type);
+           [data, exit] = HostPortMex('read',obj.ptr_,len,type); 
+        end
+        
+        function exit = write(obj, data)
+            exit = HostPortMex('write',obj.ptr_,data);            
         end
         
         %logical operators

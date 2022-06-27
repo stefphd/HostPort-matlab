@@ -63,6 +63,21 @@ std::map<std::string, Action> actionTypeMap = {
     {"getAvailablePort",Action::GetAvailablePort},
 };
 
+//Map string to Data types
+std::map<std::string, mxClassID> typeSizeMap = {
+//    {"char",            mxCHAR_CLASS            },
+    {"double",          mxDOUBLE_CLASS          },
+    {"single",          mxSINGLE_CLASS          },
+    {"int8",            mxINT8_CLASS            },
+    {"uint8",           mxUINT8_CLASS           },
+    {"int16",           mxINT16_CLASS           },
+    {"uint16",          mxUINT16_CLASS          },
+    {"int32",           mxINT32_CLASS           },
+    {"uint32",          mxUINT32_CLASS          },
+    {"int64",           mxINT64_CLASS           },
+    {"uint64",          mxUINT64_CLASS          },      
+};
+
 //Map handle to pointer
 std::map<uint64_t, std::shared_ptr<HostPort>> handleMap;
 
@@ -254,11 +269,22 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[]) {
         case Action::Read: {
             if (nrhs < 3 || (mxGetClassID(prhs[2]) != mxDOUBLE_CLASS))
                 mexErrMsgTxt("Third input must be a scalar.");
-            unsigned int size = static_cast<unsigned int>(mxGetScalar(prhs[2]));
+            if (nrhs < 4 || !mxIsChar(prhs[3]))
+                mexErrMsgTxt("Fourth input must be a type string ('single', 'double', etc.).");
+            
+            char *typeCstr = mxArrayToString(prhs[3]);
+            std::string typeStr(typeCstr);
+            mxFree(typeCstr);
+            if (typeSizeMap.count(typeStr) == 0)
+                mexErrMsgTxt(("Unrecognized data type (not in typeSizeMap): " + typeStr).c_str());
+            
+            unsigned int len = static_cast<unsigned int>(mxGetScalar(prhs[2]));
+            plhs[0] = mxCreateNumericMatrix(len,1,typeSizeMap.at(typeStr),mxREAL);
+            plhs[1] = mxCreateLogicalMatrix(1,1);
+            unsigned int size = len*mxGetElementSize(plhs[0]);
+            
             unsigned char* buf;
             buf = (unsigned char*) malloc(size);
-            plhs[0] = mxCreateNumericMatrix(size,1,mxUINT8_CLASS,mxREAL);
-            plhs[1] = mxCreateLogicalMatrix(1,1);
             if (buf == NULL)
                 mexErrMsgTxt("Fatal error in memory allocation");
             if (handle->read(buf, size)) {
@@ -271,13 +297,12 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[]) {
         }
 
         case Action::Write: {
-            if ((nrhs < 3) || (mxGetClassID(prhs[2]) != mxUINT8_CLASS))
-                mexErrMsgTxt("Third input must be a vector of bytes.");
-            unsigned int size = mxGetNumberOfElements(prhs[2]);
+            if (nrhs < 3)
+                mexErrMsgTxt("Missing third input.");      
+            unsigned int size = mxGetNumberOfElements(prhs[2])*mxGetElementSize(prhs[2]);
             unsigned char* buf = getUint8(prhs[2]);
             plhs[0] = mxCreateLogicalMatrix(1,1);
             *(mxGetLogicals(plhs[0])) = handle->write(buf, size);
-            mxFree(buf);
             return;
         }
     }
