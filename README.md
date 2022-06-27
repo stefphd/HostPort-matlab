@@ -1,6 +1,6 @@
 # HostPort Class
 
-MATLAB binding of the HostPort class for communication from e to the microcontroller.
+MATLAB binding of the HostPort class for communication from and to the microcontroller.
 
 This is the (MATLAB) host-side implementation of the Host Port class. The class is internally implemented in C++ and interfaced to MATLAB using a mex file (generated from C/C++ code). The MATLAB class is thus just a wrapper around a C++ class.
 
