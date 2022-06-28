@@ -84,6 +84,13 @@ bool HostPort::setTerminator(unsigned int terminator) {
     //}
     //return false;
 }
+bool HostPort::setTimeout(unsigned int timeout) {
+    //if (!serial) {
+        _timeout = timeout;
+        return true;
+    //}
+    //return false;
+}
 unsigned int HostPort::getPort(void) {
     return _port;
 }
@@ -96,6 +103,9 @@ unsigned int HostPort::getHeader(void) {
 unsigned int HostPort::getTerminator(void) {
     return _terminator;
 }
+unsigned int HostPort::getTimeout(void) {
+    return _timeout;
+}
 
 //reset & close fun
 bool HostPort::close(void) {
@@ -104,6 +114,13 @@ bool HostPort::close(void) {
 bool HostPort::restart(void) {
     serial.end();
     return init(_port, _baud, _timeout);
+}
+bool HostPort::flush(void) {
+    if (isInit()) {
+        serial.flush();
+        return true;
+    }
+    return false;
 }
 
 //write

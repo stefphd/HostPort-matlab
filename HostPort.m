@@ -10,6 +10,7 @@ classdef HostPort < handle
         Baud (1,1) {mustBeInteger, mustBeNonnegative, mustBeLessThan(Baud,4294967296)}
         Header (1,1) {mustBeInteger, mustBeNonnegative, mustBeLessThan(Header,4294967296)}
         Terminator (1,1) {mustBeInteger, mustBeNonnegative, mustBeLessThan(Terminator,4294967296)}
+        Timeout (1,1) {mustBeInteger, mustBeNonnegative, mustBeLessThan(Timeout,4294967296)}
         IsInit 
     end
     
@@ -66,6 +67,10 @@ classdef HostPort < handle
            exit = HostPortMex('close',obj.ptr_); 
         end
         
+        function exit = flush(obj)
+           exit = HostPortMex('flush',obj.ptr_); 
+        end
+        
         %read and write
         function [data, exit] = read(obj, len, type)
             arguments
@@ -94,19 +99,43 @@ classdef HostPort < handle
     methods %get & set methods
         
         function port = get.Port(obj)
-            port = HostPortMex('getPort',obj.ptr_);
+            if HostPortMex('isInit',obj.ptr_)
+                port = HostPortMex('getPort',obj.ptr_);
+            else
+                port = [];
+            end
         end
 
         function baud = get.Baud(obj)
-            baud = HostPortMex('getBaud',obj.ptr_);
+            if HostPortMex('isInit',obj.ptr_)
+                baud = HostPortMex('getBaud',obj.ptr_);
+            else
+                baud = [];
+            end
         end
 
         function header = get.Header(obj)
-            header = HostPortMex('getHeader',obj.ptr_);
+            if HostPortMex('isInit',obj.ptr_)
+                header = HostPortMex('getHeader',obj.ptr_);
+            else
+                header = [];
+            end
         end
 
         function terminator = get.Terminator(obj)
-            terminator = HostPortMex('getTerminator',obj.ptr_);
+            if HostPortMex('isInit',obj.ptr_)
+                terminator = HostPortMex('getTerminator',obj.ptr_);
+            else
+                terminator = [];
+            end
+        end
+
+        function timeout = get.Timeout(obj)
+            if HostPortMex('isInit',obj.ptr_)
+                timeout = HostPortMex('getTimeout',obj.ptr_);
+            else
+                timeout = [];
+            end
         end
 
         function isInit = get.IsInit(obj)
@@ -127,6 +156,10 @@ classdef HostPort < handle
 
         function set.Terminator(obj, terminator)
            HostPortMex('setTerminator',obj.ptr_,uint32(terminator)); 
+        end
+        
+        function set.Timeout(obj, timeout)
+           HostPortMex('setTimeout',obj.ptr_,uint32(timeout)); 
         end
 
     end

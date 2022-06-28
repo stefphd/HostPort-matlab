@@ -90,6 +90,13 @@ public:
 	*/
     bool restart(void);
 
+    /*! \brief Flush the port.
+		\details Function to flush the port.
+        Host port must be opened before.
+        \return true if success, false otherwise.
+	*/
+    bool flush(void);
+
     /*! \brief Set the serial port.
 		\details Function to set the serial port. The restart function must be called to make the change effective.
         \return true if success, false otherwise.
@@ -114,6 +121,12 @@ public:
 	*/
     bool setTerminator(unsigned int terminator); 
 
+    /*! \brief Set the timeout.
+		\details Function to set the timeout of the host communication. The restart function must be called to make the change effective.
+        \return true if success, false otherwise.
+	*/
+    bool setTimeout(unsigned int timeout); 
+
     /*! \brief Get the serial port.
 		\details Function to get the serial port used for the host communication. 
         \return The serial port number.
@@ -137,6 +150,12 @@ public:
         \return The terminator.
 	*/
     unsigned int getTerminator(void); 
+
+    /*! \brief Get the timeout.
+		\details Function to get the timeout used for the host communication. 
+        \return The timeout.
+	*/
+    unsigned int getTimeout(void); 
 
      /*! \brief Check if host port is open.
         \details Function to check if the host port has been open successfully.

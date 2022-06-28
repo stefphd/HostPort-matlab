@@ -61,6 +61,13 @@ To show all properties:
 disp(hostport);
 ```
 
+To flush and restart the port:
+
+```matlab
+hostport.flush();
+hostport.restart();
+```
+
 Finally, to close and clear
 
 ```matlab
@@ -78,6 +85,10 @@ Editable object properties are:
 * `Header`
 
 * `Terminator`
+
+* `Timeout`
+
+Note that the port must be restarted with `hostport.restart()` after having set one of the editable properties.
 
 The class has two static method (i.e. object instantiation not required):
 

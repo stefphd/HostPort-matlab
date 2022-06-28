@@ -26,16 +26,19 @@ enum class Action {
     Begin,
     Close,
     Restart,
+    Flush,
     Read,
     Write,
     SetPort,
     SetBuad,
     SetHeader,
     SetTerminator,
+    SetTimeout,
     GetPort,
     GetBaud,
     GetHeader,
     GetTerminator,
+    GetTimeout,
     IsInit,
     GetHandles,
     GetAvailablePort,
@@ -48,16 +51,19 @@ std::map<std::string, Action> actionTypeMap = {
     {"begin",           Action::Begin           },
     {"close",           Action::Close           },
     {"restart",         Action::Restart         },
+    {"flush",           Action::Flush           },
     {"read",            Action::Read            },
     {"write",           Action::Write           },
     {"setPort",         Action::SetPort         },
     {"setBaud",         Action::SetBuad         },
     {"setHeader",       Action::SetHeader       },
     {"setTerminator",   Action::SetTerminator   },
+    {"setTimeout",      Action::SetTimeout      },
     {"getPort",         Action::GetPort         },
     {"getBaud",         Action::GetBaud         },
     {"getHeader",       Action::GetHeader       },
     {"getTerminator",   Action::GetTerminator   },
+    {"getTimeout",      Action::GetTimeout      },
     {"isInit",          Action::IsInit          },
     {"getHandles",      Action::GetHandles      },
     {"getAvailablePort",Action::GetAvailablePort},
@@ -177,7 +183,7 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[]) {
             unsigned int timeout = HostPort::TIMEOUT;
             if (nrhs > 4) header = static_cast<unsigned int>(mxGetScalar(prhs[4]));
             if (nrhs > 5) terminator = static_cast<unsigned int>(mxGetScalar(prhs[5]));
-            //if (nrhs > 6) timeout = static_cast<unsigned int>(mxGetScalar(prhs[6]));
+            if (nrhs > 6) timeout = static_cast<unsigned int>(mxGetScalar(prhs[6]));
             plhs[0] = mxCreateLogicalMatrix(1,1); 
             *(mxGetLogicals(plhs[0])) = handle->begin(port, baud, header, terminator, timeout);        
             #ifdef DEBUG
@@ -199,6 +205,12 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[]) {
         case Action::Restart: {
             plhs[0] = mxCreateLogicalMatrix(1,1); 
             *(mxGetLogicals(plhs[0])) = handle->restart();
+            return;
+        }
+        
+        case Action::Flush: {
+            plhs[0] = mxCreateLogicalMatrix(1,1); 
+            *(mxGetLogicals(plhs[0])) = handle->flush();
             return;
         }
 
@@ -242,6 +254,14 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[]) {
             return;
         }
 
+        case Action::SetTimeout: {
+            unsigned int timeout = HostPort::TIMEOUT;
+            if (nrhs > 2) timeout = static_cast<unsigned int>(mxGetScalar(prhs[2]));
+            plhs[0] = mxCreateLogicalMatrix(1,1); 
+            *(mxGetLogicals(plhs[0])) = handle->setTimeout(timeout);
+            return;
+        }
+
         case Action::GetPort: {
             plhs[0] = mxCreateNumericMatrix(1,1,mxUINT32_CLASS,mxREAL);
             *(getUint32(plhs[0])) = handle->getPort();
@@ -263,6 +283,12 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[]) {
         case Action::GetTerminator: {
             plhs[0] = mxCreateNumericMatrix(1,1,mxUINT32_CLASS,mxREAL);
             *(getUint32(plhs[0])) = handle->getTerminator();
+            return;
+        }
+
+        case Action::GetTimeout: {
+            plhs[0] = mxCreateNumericMatrix(1,1,mxUINT32_CLASS,mxREAL);
+            *(getUint32(plhs[0])) = handle->getTimeout();
             return;
         }
 
