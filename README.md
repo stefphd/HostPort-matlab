@@ -88,7 +88,7 @@ Editable object properties are:
 
 * `Timeout`
 
-Note that the port must be restarted with `hostport.restart()` after having set one of the editable properties.
+Note that the port must be restarted with `hostport.restart()` after having set one of the editable properties to make the change effective.
 
 The class has two static method (i.e. object instantiation not required):
 
