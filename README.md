@@ -96,6 +96,14 @@ The class has two static method (i.e. object instantiation not required):
 
 * `HostPort.clear()` to clear all the instantiated objects in the mex file.
 
+Default header, terminator, and timeout can be obtained using
+
+* `HostPort.HEADER`
+
+* `HostPort.TERMINATOR`
+
+* `HostPort.TIMEOUT`
+
 ## Building
 
 If you want to (re)build the mex file for the Host Port class, you need to run in MATLAB

@@ -42,6 +42,9 @@ enum class Action {
     IsInit,
     GetHandles,
     GetAvailablePort,
+    HEADER,
+    TERMINATOR,
+    TIMEOUT
 };
 
 //Map string to Action
@@ -67,6 +70,9 @@ std::map<std::string, Action> actionTypeMap = {
     {"isInit",          Action::IsInit          },
     {"getHandles",      Action::GetHandles      },
     {"getAvailablePort",Action::GetAvailablePort},
+    {"HEADER",          Action::HEADER          },
+    {"TERMINATOR",      Action::TERMINATOR      },
+    {"TIMEOUT",         Action::TIMEOUT         },
 };
 
 //Map string to Data types
@@ -151,6 +157,21 @@ void mexFunction(int nlhs, mxArray *plhs[],int nrhs, const mxArray *prhs[]) {
             plhs[0] = mxCreateNumericMatrix(ports.size(),1,mxUINT32_CLASS,mxREAL);
             for (int i = 0; i < ports.size(); ++i) 
                 *(getUint32(plhs[0])+i) = ports[i];
+            return;
+        }
+        case Action::HEADER: {
+            plhs[0] = mxCreateNumericMatrix(1,1,mxUINT32_CLASS,mxREAL);
+            *(getUint32(plhs[0])) = HostPort::HEADER;
+            return;
+        }
+        case Action::TERMINATOR: {
+            plhs[0] = mxCreateNumericMatrix(1,1,mxUINT32_CLASS,mxREAL);
+            *(getUint32(plhs[0])) = HostPort::TERMINATOR;
+            return;
+        }
+        case Action::TIMEOUT: {
+            plhs[0] = mxCreateNumericMatrix(1,1,mxUINT32_CLASS,mxREAL);
+            *(getUint32(plhs[0])) = HostPort::TIMEOUT;
             return;
         }
     }

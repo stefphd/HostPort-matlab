@@ -13,6 +13,12 @@ classdef HostPort < handle
         Timeout (1,1) {mustBeInteger, mustBeNonnegative, mustBeLessThan(Timeout,4294967296)}
         IsInit 
     end
+
+    properties (Constant)
+        HEADER = HostPortMex('HEADER');
+        TERMINATOR = HostPortMex('TERMINATOR');
+        TIMEOUT = HostPortMex('TIMEOUT');
+    end
     
     methods (Static)
         
