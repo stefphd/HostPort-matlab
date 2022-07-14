@@ -15,7 +15,7 @@ Tested on Windows 10 and Linux (ArchLinux) with MATLAB 2022a.
 * `HostPortMex.mexa64`: mex file for the Host Port class (Linux x64 version)
 * `make.m`: MATLAB function to build the mex file
 * `HostPort.m`: implementation of the Host Port class in MATLAB (using the mex file)
-* `Serial.m`: implementation of the Serial class in MATLAB (using the mex file)
+* 
 * `testing.m`: MATLAB script for testing
 * `README.md`: this file
 
@@ -29,22 +29,23 @@ baud = 115200; %baudrate
 len = 64; %size of the buffer to read
 buf = single([0 1 2 3 4 5]); %buffer to write
 
-hostport = HostPort(); %instantiate a new HostPort object
-hostport.begin(port, baud); %start the communication, return true if success
-%hostport.begin(port, baud, header, terminator); %set also header and terminator
+h = HostPort(); %instantiate a new HostPort object
+h.begin(port, baud); %start the communication, return true if success
+%h.begin(port, baud, header, terminator); %set also header and terminator
+%h.begin(port, baud, header, terminator, timeout); %set also timeout
 
 %possibilities are: 'single', 'double', 'uint8', 'int8', 'uint16', 'int16', 
 %                   'uint32', 'int32', 'uint64', 'int64'
-exit = hostport.read(len,'single'); %read 'len' single values, return true if success
+exit = h.read(len,'single'); %read 'len' single values, return true if success
 
-exit = hostport.write(buf); %write buffer
+exit = h.write(buf); %write buffer
 ```
 
 To check the connection status:
 
 ```matlab
 %check initialization
-if ~hostport %or hostport.isInit or hostport.begin(port, baud)
+if ~h %or hostport.isInit or hostport.begin(port, baud)
     error('Unable to connect')
 end
 
@@ -58,22 +59,22 @@ To show all properties:
 
 ```matlab
 %shos all properties
-disp(hostport);
+disp(h);
 ```
 
 To flush and restart the port:
 
 ```matlab
-hostport.flush();
-hostport.restart();
+h.flush();
+h.restart();
 ```
 
 Finally, to close and clear
 
 ```matlab
 %close & clear
-hostport.close();
-clear hostport; %or HostPort.clear() for clear all
+h.close();
+clear h; %or HostPort.clear() for clear all HostPort objects
 ```
 
 Editable object properties are:
@@ -88,9 +89,9 @@ Editable object properties are:
 
 * `Timeout`
 
-Note that the port must be restarted with `hostport.restart()` after having set one of the editable properties to make the change effective.
+Note that the port must be restarted with `h.restart()` after having set one of the editable properties to make the change effective.
 
-The class has two static method (i.e. object instantiation not required):
+The class has two static methods (i.e. object instantiation not required):
 
 * `HostPort.getPorts()` to get the available serial ports
 

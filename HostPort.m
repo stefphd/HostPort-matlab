@@ -60,8 +60,10 @@ classdef HostPort < handle
             end
             if (nargin-1)<3
                 exit = HostPortMex('begin',obj.ptr_,uint32(port),uint32(baud));
-            else
-                exit = HostPortMex('begin',obj.ptr_,uint32(port),uint32(baud),uint32(varargin{1}),uint32(varargin{2}));                
+            elseif (nargin-1) < 5
+                exit = HostPortMex('begin',obj.ptr_,uint32(port),uint32(baud),uint32(varargin{1}),uint32(varargin{2}));    
+            else   
+                exit = HostPortMex('begin',obj.ptr_,uint32(port),uint32(baud),uint32(varargin{1}),uint32(varargin{2}),uint32(varargin{3}));            
             end
         end
 
